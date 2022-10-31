@@ -1,4 +1,4 @@
-# Tree Light 2
+# LightControl
 Christmas tree light decorations controlled via a web app.
 I have 6 strips of individually addressable LEDs from Adafruit. Connected in 2 strands of 3.
 ## Components
