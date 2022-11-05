@@ -1,4 +1,7 @@
+using LightControl.Hubs;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
 
 // Add services to the container.
 
@@ -14,6 +17,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 
+app.MapHub<ArduinoHub>("/lightcontrolhub");
 
 app.MapControllerRoute(
     name: "default",
