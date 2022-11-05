@@ -9,7 +9,10 @@ export class SignalrService {
   private hubConnection?: signalR.HubConnection
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5001/lightcontrolhub')
+      .withUrl('https://localhost:5001/lightcontrolhub', {
+        // skipNegotiation: true
+        // transport: signalR.HttpTransportType.WebSockets
+      })
       .build();
     this.hubConnection
       .start()
@@ -18,6 +21,7 @@ export class SignalrService {
   }
 
   public receivedLightControlData = () => {
+    console.log("receivedLightControlData:this.hubConnection", this.hubConnection);
     this.hubConnection?.on('ReceiveMessage', (data: LightControlUpdate) => {
       this.data = data;
       console.log(data);
