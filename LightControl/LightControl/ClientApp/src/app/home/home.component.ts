@@ -17,14 +17,14 @@ export class HomeComponent {
   ngOnInit() {
     this.signalRService.startConnection();
     this.signalRService.addBroadcastListener();
-    // this.startHttpRequest();
+    this.startHttpRequest();
   }
-  // private startHttpRequest = () => {
-  //   this.http.get('https://localhost:5001/api/chart')
-  //     .subscribe(res => {
-  //       console.log(res);
-  //     })
-  // }
+  private startHttpRequest = () => {
+    this.http.get('https://localhost:5001/LightControl')
+      .subscribe((res) => {
+        console.log(res);
+      })
+  }
 
   public sendUpdate (data: MatButtonToggleChange) {
     console.log('data :', data);
