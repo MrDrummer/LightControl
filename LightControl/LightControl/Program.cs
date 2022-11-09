@@ -1,4 +1,5 @@
 using LightControl.Hubs;
+using LightControl.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
@@ -6,6 +7,8 @@ builder.Services.AddSignalR();
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<ILightControl, LightControlService>();
 
 var app = builder.Build();
 
