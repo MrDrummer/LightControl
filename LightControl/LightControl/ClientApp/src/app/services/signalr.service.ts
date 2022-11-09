@@ -6,7 +6,7 @@ import { LightControlUpdate } from '../_interfaces/LightControlUpdate.model';
 })
 export class SignalrService {
   public data?: LightControlUpdate;
-  private hubConnection?: signalR.HubConnection
+  private hubConnection?: signalR.HubConnection;
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:5001/lightcontrolhub', {
