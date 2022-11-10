@@ -1,34 +1,27 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { SignalrService } from "../services/signalr.service";
 import { MatButtonToggleChange } from "@angular/material/button-toggle";
+import {LightControlUpdate} from "../_interfaces/LightControlUpdate.model";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  get pattern(): string {
-    return this.signalRService.data?.pattern ?? 'solid';
+  get data(): Partial<LightControlUpdate> {
+    return this.signalRService.data ?? {};
   }
 
-  constructor(public signalRService: SignalrService, private http: HttpClient) { }
+  constructor(public signalRService: SignalrService) { }
   ngOnInit() {
     this.signalRService.startConnection();
     this.signalRService.addBroadcastListener();
-    this.startHttpRequest();
-  }
-  private startHttpRequest = () => {
-    this.http.get('https://localhost:5001/LightControl')
-      .subscribe((res) => {
-        console.log(res);
-      })
+    this.signalRService.startHttpRequest();
   }
 
   public sendUpdate (data: MatButtonToggleChange) {
     console.log('data :', data);
-    console.log('state changed :', this.pattern);
     this.signalRService.broadcastData({ pattern: data.value });
   }
 

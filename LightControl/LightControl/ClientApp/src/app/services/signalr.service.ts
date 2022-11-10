@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr"
+import { HttpClient } from '@angular/common/http';
 import { LightControlUpdate } from '../_interfaces/LightControlUpdate.model';
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,9 @@ import { LightControlUpdate } from '../_interfaces/LightControlUpdate.model';
 export class SignalrService {
   public data?: LightControlUpdate;
   private hubConnection?: signalR.HubConnection;
+
+  constructor(public http: HttpClient) { }
+
   public startConnection = () => {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:5001/lightcontrolhub', {
@@ -26,6 +30,13 @@ export class SignalrService {
       this.data = data;
       console.log('update :', data?.pattern);
     });
+  }
+  public startHttpRequest = () => {
+    this.http.get('https://localhost:5001/LightControl')
+      .subscribe((res) => {
+        console.log("init api response :", res);
+        this.data = res as LightControlUpdate;
+      })
   }
 
   public broadcastData = (data: LightControlUpdate) => {
