@@ -1,37 +1,62 @@
-int ledPin = 13; //integrated LED
-int serialData = '1';
-String readString;
+/* YourDuinoStarter_SerialMonitor_SEND_RCVE<br> - WHAT IT DOES: 
+   - Receives characters from Serial Monitor
+   - Displays received character as Decimal, Hexadecimal and Character
+   - Controls pin 13 LED from Keyboard
+ - SEE the comments after "//" on each line below
+ - CONNECTIONS:
+   - None: Pin 13 built-in LED
+   - 
+ - V1.00 02/11/13
+   Questions: terry@yourduino.com */
 
-void setup() {
-  Serial.begin(9600);  //initialize serial comms
-  pinMode(ledPin, OUTPUT);
-  Serial.println("Enter LED Number 0 to 7 or 'x' to clear");
+/*-----( Import needed libraries )-----*/
+/*-----( Declare Constants and Pin Numbers )-----*/
+#define led 13  // built-in LED
+/*-----( Declare objects )-----*/
+/*-----( Declare Variables )-----*/
+int ByteReceived;
+
+void setup()   /****** SETUP: RUNS ONCE ******/
+{
+  Serial.begin(9600);  
+  Serial.println("--- Start Serial Monitor SEND_RCVE ---");
+    Serial.println(" Type in Box above, . ");
+  Serial.println("(Decimal)(Hex)(Character)");  
+  Serial.println(); 
 }
+//--(end setup )---
 
-void loop() {
+void loop()   /****** LOOP: RUNS CONSTANTLY ******/
+{
+  if (Serial.available() > 0)
+  {
+    ByteReceived = Serial.read();
+    Serial.print(ByteReceived);   
+    Serial.print("        ");      
+    Serial.print(ByteReceived, HEX);
+    Serial.print("       ");     
+    Serial.print(char(ByteReceived));
+    
+    if(ByteReceived == '1') // Single Quote! This is a character.
+    {
+      digitalWrite(led,HIGH);
+      Serial.print(" LED ON ");
+    }
+    
+    if(ByteReceived == '0')
+    {
+      digitalWrite(led,LOW);
+      Serial.print(" LED OFF");
+    }
+    
+    Serial.println();    // End the line
 
-  while (Serial.available()) {
-    delay(2);  //delay to allow byte to arrive in input buffer
-    char c = Serial.read();
-    readString += c;
+  // END Serial Available
   }
-
-  if (readString.length() >0) {
-    Serial.println(readString);
-
-    readString="";
-  } 
-  // if (Serial.available()) {
-  //   serialData = Serial.read();
-  //   // Serial.println('I received: ');
-  //   Serial.println(serialData, DEC);
-  //   if(serialData == '1'){
-  //     digitalWrite(ledPin, HIGH);
-  //     // Serial.println('A 1');
-  //   }
-  //   else {
-  //     digitalWrite(ledPin, LOW);
-  //     // Serial.println('Not a 1');
-  //   }
-  // }
 }
+
+//--(end main loop )---
+
+/*-----( Declare User-written Functions )-----*/
+
+/*********( THE END )***********/
