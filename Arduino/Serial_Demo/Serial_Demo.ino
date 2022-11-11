@@ -14,13 +14,13 @@
 #define led 13  // built-in LED
 /*-----( Declare objects )-----*/
 /*-----( Declare Variables )-----*/
-int ByteReceived;
+String ByteReceived;
 
 void setup()   /****** SETUP: RUNS ONCE ******/
 {
   Serial.begin(9600);  
   Serial.println("--- Start Serial Monitor SEND_RCVE ---");
-    Serial.println(" Type in Box above, . ");
+  Serial.println(" Type in Box above, . ");
   Serial.println("(Decimal)(Hex)(Character)");  
   Serial.println(); 
 }
@@ -30,23 +30,27 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
 {
   if (Serial.available() > 0)
   {
-    ByteReceived = Serial.read();
-    Serial.print(ByteReceived);   
-    Serial.print("        ");      
-    Serial.print(ByteReceived, HEX);
-    Serial.print("       ");     
-    Serial.print(char(ByteReceived));
+    ByteReceived = Serial.readStringUntil('\n');
+    // Serial.print("        ");      
+    // Serial.print(int(ByteReceived));   
+    // Serial.print("        ");      
+    // Serial.print(ByteReceived, HEX);
+    // Serial.print("       ");     
+    // Serial.print(char(ByteReceived));
     
-    if(ByteReceived == '1') // Single Quote! This is a character.
+    if(ByteReceived == "1") // Single Quote! This is a character.
     {
-      digitalWrite(led,HIGH);
+      digitalWrite(led, HIGH);
       Serial.print(" LED ON ");
     }
-    
-    if(ByteReceived == '0')
+    else if(ByteReceived == "2")
     {
-      digitalWrite(led,LOW);
+      digitalWrite(led, LOW);
       Serial.print(" LED OFF");
+    }
+    else
+    {
+      Serial.print(" NL");
     }
     
     Serial.println();    // End the line
