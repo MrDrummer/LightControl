@@ -1,7 +1,8 @@
 <h3>Selected Pattern</h3>
-<mat-button-toggle-group [ngModel]="data.pattern" name="pattern" aria-label="Light Pattern" (change)="sendUpdate($event)">
+<mat-button-toggle-group [ngModel]="data.pattern" name="pattern" aria-label="Light Pattern" (change)="setPattern($event)">
   <mat-button-toggle value="solid">Solid</mat-button-toggle>
   <mat-button-toggle value="twinkle">Twinkle</mat-button-toggle>
   <mat-button-toggle value="fade">Fade</mat-button-toggle>
 </mat-button-toggle-group>
 <p>Pattern: <strong>{{ data.pattern }}</strong></p>
+<input [colorPicker]="colour" [style.background]="colour" (colorPickerChange)="setColour($event)"/>

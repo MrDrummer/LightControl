@@ -39,7 +39,7 @@ export class SignalrService {
       })
   }
 
-  public broadcastData = (data: LightControlUpdate) => {
+  public broadcastData = (data: Partial<LightControlUpdate>) => {
     this.hubConnection?.invoke('SendMessage', data).catch(err => console.error(err));
   }
 }

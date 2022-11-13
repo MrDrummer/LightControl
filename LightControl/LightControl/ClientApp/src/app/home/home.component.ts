@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
+import { MatButtonToggleChange } from "@angular/material/button-toggle";
 
 import { SignalrService } from "../services/signalr.service";
-import { MatButtonToggleChange } from "@angular/material/button-toggle";
-import {LightControlUpdate} from "../_interfaces/LightControlUpdate.model";
+import { LightControlUpdate } from "../_interfaces/LightControlUpdate.model";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
+  get colour(): string {
+    return `#${this.data.colour?.toString(16)}`;
+  }
+
   get data(): Partial<LightControlUpdate> {
     return this.signalRService.data ?? {};
   }
@@ -20,9 +24,16 @@ export class HomeComponent {
     this.signalRService.startHttpRequest();
   }
 
-  public sendUpdate (data: MatButtonToggleChange) {
+  public setPattern (data: MatButtonToggleChange) {
     console.log('data :', data);
     this.signalRService.broadcastData({ pattern: data.value });
+  }
+
+  public setColour (data: string) {
+    console.log('data :', data);
+
+    const numberValue = parseInt(data.replace('#', '0x'), 16);
+    this.signalRService.broadcastData({ colour: numberValue });
   }
 
 }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 
 import { AppComponent } from './app.component';
@@ -27,7 +28,8 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
     ]),
     BrowserAnimationsModule,
     MatButtonToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ColorPickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
