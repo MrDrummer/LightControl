@@ -27,8 +27,11 @@ export class SignalrService {
   public addBroadcastListener = () => {
     console.log("addBroadcastListener:this.hubConnection", this.hubConnection);
     this.hubConnection?.on('ReceiveMessage', (data: LightControlUpdate) => {
-      this.data = data;
-      console.log('update :', data?.pattern);
+      this.data = {
+        pattern: data.pattern ?? this.data?.pattern,
+        colour: data.colour ? data.colour : (this.data?.colour ?? 0)
+      };
+      console.log('update :', data);
     });
   }
   public startHttpRequest = () => {
