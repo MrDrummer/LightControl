@@ -8,12 +8,10 @@ namespace LightControl.Controllers;
 public class LightControlController : ControllerBase
 {
 
-    private readonly ILogger<WeatherForecastController> _logger;
     private readonly ILightControl _lightControl;
 
-    public LightControlController(ILogger<WeatherForecastController> logger, ILightControl lightControl)
+    public LightControlController(ILightControl lightControl)
     {
-        _logger = logger;
         _lightControl = lightControl;
     }
 

@@ -10,14 +10,14 @@ public interface ILightControl
 
 public class LightControlService : ILightControl
 {
-    private LightControlUpdateModel data { get; set; }
+    private LightControlUpdateModel _data { get; set; }
 
     public LightControlUpdateModel GetData()
     {
-        return data;
+        return _data;
     }
     public LightControlUpdateModel SetData(LightControlUpdateModel newData)
     {
-        return data = newData;
+        return _data = newData;
     }
 }
