@@ -1,4 +1,4 @@
-﻿using LightControl.Models;
+using LightControl.Models;
 
 namespace LightControl.Services;
 
