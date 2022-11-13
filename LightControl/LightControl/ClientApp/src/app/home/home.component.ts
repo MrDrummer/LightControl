@@ -25,14 +25,15 @@ export class HomeComponent {
   }
 
   public setPattern (data: MatButtonToggleChange) {
-    console.log('data :', data);
+    console.log('pattern :', data.value);
     this.signalRService.broadcastData({ pattern: data.value });
   }
 
   public setColour (data: string) {
-    console.log('data :', data);
-
     const numberValue = parseInt(data.replace('#', '0x'), 16);
+
+    console.log('colour :', numberValue);
+
     this.signalRService.broadcastData({ colour: numberValue });
   }
 
