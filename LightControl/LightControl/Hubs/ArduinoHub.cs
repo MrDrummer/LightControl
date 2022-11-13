@@ -1,4 +1,4 @@
-using LightControl.Models;
+﻿using LightControl.Models;
 using LightControl.Services;
 using Microsoft.AspNetCore.SignalR;
 
@@ -18,9 +18,24 @@ namespace LightControl.Hubs
             Console.WriteLine("=========================");
             Console.WriteLine("Pattern : {0}", message.pattern);
             Console.WriteLine("Colour : {0}", message.colour);
+
+            LightControlUpdateModel defaults = _lightControl.GetData();
+
+            int colour = message.colour > 0 ? message.colour : defaults.colour;
+            
+            LightControlUpdateModel newMessage = new LightControlUpdateModel
+            {
+                pattern = message.pattern ?? defaults.pattern ?? "twinkle",
+                colour = colour
+            };
+            // Console.WriteLine("defaults : {0}", defaults);
+            Console.WriteLine("newMessage : {0}", newMessage);
+            
+            // Send `message` for the change
+            // Send `newMessage` for the new config
             await Clients.All.SendAsync("ReceiveMessage", message);
 
-            // _lightControl.SetData(newMessage);
+            _lightControl.SetData(newMessage);
         }
     }
 }
