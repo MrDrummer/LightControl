@@ -20,21 +20,19 @@ namespace LightControl.Hubs
 
             var defaults = _lightControl.GetData();
             Console.WriteLine("defaults : {0}", defaults);
-            Console.WriteLine("message.colour : {0}", message.Colour);
-            Console.WriteLine("defaults.colour : {0}", defaults?.Colour);
 
-            var colour = message.Colour > 0
-                ? message.Colour
-                : defaults?.Colour > 0
-                    ? defaults.Colour
+            var colour = message.colour > 0
+                ? message.colour
+                : defaults?.colour > 0
+                    ? defaults.colour
                     : 0;
             
             Console.WriteLine("colour : {0}", colour);
             
             var newMessage = new LightControlUpdateModel
             {
-                Pattern = message.Pattern ?? defaults?.Pattern ?? "twinkle",
-                Colour = colour
+                pattern = message.pattern ?? defaults?.pattern ?? "twinkle",
+                colour = colour
             };
             Console.WriteLine("newMessage : {0}", newMessage);
             

@@ -8,4 +8,11 @@
   <mat-button-toggle value="rainbowChase">Rainbow Chase</mat-button-toggle>
 </mat-button-toggle-group>
 <p>Pattern: <strong>{{ data.pattern }}</strong></p>
-<input [colorPicker]="colour" [style.background]="colour" (colorPickerChange)="setColour($event)"/>
+<span
+  [colorPicker]="colour"
+  [cpToggle]="true"
+  [cpDialogDisplay]="'inline'"
+  [cpAlphaChannel]="'disabled'"
+  [cpOutputFormat]="'hex'"
+  (colorPickerChange)="setColour($event)"
+></span>

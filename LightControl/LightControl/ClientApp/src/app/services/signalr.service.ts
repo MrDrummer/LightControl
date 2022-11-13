@@ -31,7 +31,7 @@ export class SignalrService {
         pattern: data.pattern ?? this.data?.pattern,
         colour: data.colour ? data.colour : (this.data?.colour ?? 0)
       };
-      console.log('update :', data);
+      // console.log('update :', data);
     });
   }
   public startHttpRequest = () => {
