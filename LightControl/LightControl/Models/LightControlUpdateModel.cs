@@ -1,10 +1,10 @@
-﻿namespace LightControl.Models;
+namespace LightControl.Models;
 
 public class LightControlUpdateModel
 {
     public string? pattern { get; set; }
-    
-    public int colour { get; set; }
+
+    public int? colour { get; set; }
     
     public override string ToString()
     {
