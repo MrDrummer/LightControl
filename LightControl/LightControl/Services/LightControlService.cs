@@ -12,6 +12,15 @@ public class LightControlService : ILightControl
 {
     private LightControlUpdateModel _data { get; set; }
 
+    public LightControlService()
+    {
+        _data = new()
+        {
+            Pattern = "solid",
+            Colour = 0
+        };
+    }
+
     public LightControlUpdateModel GetData()
     {
         return _data;

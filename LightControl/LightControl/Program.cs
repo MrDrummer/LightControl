@@ -9,6 +9,7 @@ builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<ILightControl, LightControlService>();
+builder.Services.AddSingleton<ISerialService, SerialService>();
 
 var app = builder.Build();
 

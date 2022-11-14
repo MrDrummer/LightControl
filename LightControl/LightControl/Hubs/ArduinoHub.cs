@@ -7,10 +7,12 @@ namespace LightControl.Hubs
     public class ArduinoHub : Hub
     {
         private readonly ILightControl _lightControl;
+        private readonly SerialService _serial;
 
-        public ArduinoHub(ILightControl lightControl)
+        public ArduinoHub(ILightControl lightControl, SerialService serial)
         {
             _lightControl = lightControl;
+            _serial = serial;
         }
         
         public async Task SendMessage(LightControlUpdateModel message)
@@ -21,18 +23,19 @@ namespace LightControl.Hubs
             var defaults = _lightControl.GetData();
             Console.WriteLine("defaults : {0}", defaults);
 
-            var colour = message.colour > 0
-                ? message.colour
-                : defaults?.colour > 0
-                    ? defaults.colour
+            var colour = message.Colour > 0
+                ? message.Colour
+                : defaults?.Colour > 0
+                    ? defaults.Colour
                     : 0;
             
             Console.WriteLine("colour : {0}", colour);
             
             var newMessage = new LightControlUpdateModel
             {
-                pattern = message.pattern ?? defaults?.pattern ?? "twinkle",
-                colour = colour
+                Pattern = message.Pattern ?? defaults?.Pattern ?? "twinkle",
+                Colour = colour,
+                Speed = message.Speed ?? defaults?.Speed
             };
             Console.WriteLine("newMessage : {0}", newMessage);
             
@@ -40,7 +43,14 @@ namespace LightControl.Hubs
             // Send `newMessage` for the new config
             await Clients.All.SendAsync("ReceiveMessage", newMessage);
 
+            // TODO: Do data merge in SetData - send partial
             _lightControl.SetData(newMessage);
+            _serial.SendData(new SerialModel
+            {
+                Colour = newMessage.Colour.ToString(),
+                Pattern = newMessage.Pattern,
+                Speed = newMessage.Speed.ToString()
+            });
         }
     }
 }
