@@ -6,12 +6,12 @@ namespace LightControl.Services;
 
 public interface ISerialService
 {
-    SerialModel SendData(SerialModel data);
+    void SendData(SerialModel data);
 }
 
-public class SerialService : ISerialService
+public class SerialService : ISerialService, IDisposable
 {
-    static SerialPort _serialPort;
+    private SerialPort _serialPort;
 
     public SerialService()
     {
@@ -22,10 +22,17 @@ public class SerialService : ISerialService
     }
 
     // TODO: Require SerialMessageType
-    public SerialModel SendData(SerialModel data)
+    public void SendData(SerialModel data)
     {
+        Console.WriteLine("Sending serial data : {0}", data);
         _serialPort.WriteLine($"{SerialMessageType.Pattern} {data.Pattern}");
         _serialPort.WriteLine($"{SerialMessageType.Colour} {data.Colour}");
         _serialPort.WriteLine($"{SerialMessageType.Speed} {data.Speed}");
+    }
+
+    public void Dispose()
+    {
+        _serialPort.Close();
+        _serialPort.Dispose();
     }
 }

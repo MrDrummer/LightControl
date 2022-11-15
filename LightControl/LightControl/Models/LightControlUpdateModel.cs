@@ -7,7 +7,7 @@ public class LightControlUpdateModel
     [JsonPropertyName("pattern")]
     public string? Pattern { get; set; }
 
-    [JsonPropertyName("pattern")]
+    [JsonPropertyName("colour")]
     public int? Colour { get; set; }
     
     [JsonPropertyName("speed")]

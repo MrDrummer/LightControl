@@ -7,9 +7,9 @@ namespace LightControl.Hubs
     public class ArduinoHub : Hub
     {
         private readonly ILightControl _lightControl;
-        private readonly SerialService _serial;
+        private readonly ISerialService _serial;
 
-        public ArduinoHub(ILightControl lightControl, SerialService serial)
+        public ArduinoHub(ILightControl lightControl, ISerialService serial)
         {
             _lightControl = lightControl;
             _serial = serial;
@@ -45,12 +45,14 @@ namespace LightControl.Hubs
 
             // TODO: Do data merge in SetData - send partial
             _lightControl.SetData(newMessage);
-            _serial.SendData(new SerialModel
+            SerialModel serialData = new()
             {
                 Colour = newMessage.Colour.ToString(),
                 Pattern = newMessage.Pattern,
                 Speed = newMessage.Speed.ToString()
-            });
+            };
+            Console.WriteLine("serialData : {0}", serialData);
+            _serial.SendData(serialData);
         }
     }
 }

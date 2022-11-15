@@ -53,6 +53,7 @@ void loop()   /****** LOOP: RUNS CONSTANTLY ******/
       Serial.print(" NL");
     }
     
+    Serial.println(ByteReceived);    // End the line
     Serial.println();    // End the line
 
   // END Serial Available
