@@ -16,7 +16,7 @@ public class SerialService : ISerialService, IDisposable
     public SerialService()
     {
         _serialPort = new SerialPort();
-        _serialPort.PortName = "COM3";
+        _serialPort.PortName = "COM5";
         _serialPort.BaudRate = 9600;
         _serialPort.Open();
     }
